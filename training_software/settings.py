@@ -20,12 +20,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'dt00jcw^86gvm)vy@y4h@ijw)c7y6qs&86+wg4jw7090eze*^&'
+# SECRET_KEY = 'dt00jcw^86gvm)vy@y4h@ijw)c7y6qs&86+wg4jw7090eze*^&'
+# Use the above for development
+# SECRET_KEY = '8ce0e585ad21a504abea2e4e71e24548bca210a23aa55e13'
+SECRET_KEY = os.environ.get('SECRET_KEY')
+# Set the above on while production or pushing the code. This is newly generated
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+# DEBUG = "True"
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['https://training-software.herokuapp.com']
 
 
 # Application definition
@@ -120,3 +125,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
