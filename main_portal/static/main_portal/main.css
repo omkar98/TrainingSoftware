@@ -2,7 +2,14 @@ body {
   margin-top: 2rem;
   /* font-family: 'Oswald', sans-serif; */
   font-family: 'Roboto', sans-serif !important;
-
+}
+.overview{
+  background: #2C2C2C;
+  color: white;
+}
+.why{
+  background: #EDEDED;
+  color: black;
 }
 .default-color {
   background: #15AABF !important;
@@ -35,4 +42,8 @@ body {
   font-size: 20px;
   /* position: relative; */
   /* top:50px; */
+}
+
+footer {
+
 }
