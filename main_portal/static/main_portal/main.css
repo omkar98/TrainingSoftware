@@ -1,0 +1,38 @@
+body {
+  margin-top: 2rem;
+  /* font-family: 'Oswald', sans-serif; */
+  font-family: 'Roboto', sans-serif !important;
+
+}
+.default-color {
+  background: #15AABF !important;
+}
+.header-color{
+  background: #20232A !important;
+}
+.navbar-brand{
+  color: #15AABF !important;
+  font-weight: bold;
+}
+.required-form{
+  color: red;
+}
+
+.title-font{
+  font-family: 'Oswald', sans-serif;
+  color: white;
+  padding-left: 20px;
+}
+.title-font-button{
+  font-family: 'Oswald', sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+}
+.title-font-details{
+  font-family: 'Oswald', sans-serif;
+  color: black;
+  font-size: 20px;
+  /* position: relative; */
+  /* top:50px; */
+}

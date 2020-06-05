@@ -1,0 +1,10 @@
+1) Make a layout ready for work. (7:00 - 8:00)(DONE!)
+  main_portal
+  admin_portal <- not-required
+  student_portal <- not required
+2) Make the database ready, with all the initial migrations (10:00 - 11:00)
+3) Make the forms and user sessions, along with the backend. (13:00 - 14:00)
+4) Host the website. (14:00 - 17:00) [LONG PROCESS]
+5) [STATIC PAGES]
+  Create home, announcements, contacts, participants, leaderboard, schedule and gallery pages.
+6) Remaining tasks. (if any)

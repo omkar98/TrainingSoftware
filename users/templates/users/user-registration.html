@@ -1,0 +1,38 @@
+{% extends "main_portal/base_layout.html" %}
+{% block title %}
+ {{info.title}}
+{% endblock title%}
+{% block content %}
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="pt-5 pb-4">
+        <div class="p-2">
+          <h2>Student Registration Form</h2><hr>
+          <form method="POST">
+            {% csrf_token %}
+            <div class="row p-1" style="display: flex; align-items: center; justify-content: center;">
+              <div class="col-md-6">
+                <label for="student_first_name">First Name<span class="required-form">*</span></label>
+                <input name="student_first_name" type="text" class="form-control  mb-4" placeholder="Please enter your first name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="student_last_name">Last Name<span class="required-form">*</span></label>
+                <input name="student_last_name" type="text" class="form-control  mb-4" placeholder="Please enter your last name" required>
+              </div>
+              <div class="col-md-6">
+                <label for="student_email">Email ID<span class="required-form">*</span></label>
+                <input name="student_email" type="email" class="form-control  mb-4" placeholder="Please enter your email-id" required>
+              </div>
+              <div class="col-md-6">
+                <label for="student_password">Enter Password<span class="required-form">*</span></label>
+                <input class="form-control  mb-4" type="tel" id="password" name="student_password"  placeholder="Please enter your Password" required>
+              </div>
+            <button class="btn btn-info" type="submit">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

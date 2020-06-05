@@ -1,0 +1,47 @@
+{% extends "main_portal/base_layout.html" %}
+{% block title %}
+ {{info.title}}
+{% endblock title%}
+
+{% block content %}
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="container my-5 py-5 z-depth-1">
+        <a href="{% url 'add-update' %}"><h5 class="text-right"><i class="fas fa-pencil-alt"></i> Add Update</h5></a>
+        <!--Section: Content-->
+        <section class="text-center px-md-5 mx-md-5 dark-grey-text">
+          <h3 class="font-weight-bold">Your Updates</h3>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Date</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for post in info.posts%}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{post.date_posted}}</td>
+                  <td>{{post.title}}</td>
+                  <td>{{post.content | safe}}</td>
+                </tr>
+              {%endfor%}
+
+            </tbody>
+          </table>
+
+
+        </section>
+        <!--Section: Content-->
+</div>
+    </div>
+  </div>
+</main>
+<!-- Button trigger modal -->
+
+
+{% endblock content %}
