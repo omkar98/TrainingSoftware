@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from main_portal.models import Update, UserApproval
+from main_portal.models import Update, UserDetail
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.contrib.auth import logout
@@ -50,7 +50,7 @@ def user_login(request):
         username=form['student_email']
         password=form['student_password']
         user = authenticate(request, username=username, password=password)
-        user_status = UserApproval.objects.get(student=user)
+        user_status = UserDetail.objects.get(student=user)
         if user is not None and user_status.status==1:
             login(request, user)
             print("login successful")
@@ -62,12 +62,13 @@ def user_login(request):
 
 
 def register(request):
+    classes = UserDetail._meta.get_field('student_class').choices
     info = {
         'title': 'User-Registration',
+        'classes':classes,
     }
     if request.method == 'POST':
         form = request.POST.dict()
-        # print()
         try:
             user = User.objects.create_user(
                     username = form['student_email'],
@@ -81,7 +82,7 @@ def register(request):
             return render(request, 'users/user-registration.html', {'info':info})
         else:
             user.save()
-            user_status = UserApproval(student=user)
+            user_status = UserDetail(student=user, student_class=form['student_class'])
             user_status.save()
             messages.add_message(request, messages.SUCCESS,"Registered Successfully! Your registration will be approved by Admin within 24 Hrs.")
         return redirect('portal-home')

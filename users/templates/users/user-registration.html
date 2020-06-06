@@ -5,21 +5,30 @@
 {% block content %}
 <main role="main" class="container-fluid">
   <div class="row">
-    <div class="col-md-12 text-center">
+    <div class="col-md-12 text-justify">
       <div class="pt-5 pb-4">
         <div class="p-2">
           <h2>Student Registration Form</h2><hr>
           <form method="POST">
             {% csrf_token %}
             <div class="row p-1" style="display: flex; align-items: center; justify-content: center;">
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="student_first_name">First Name<span class="required-form">*</span></label>
                 <input name="student_first_name" type="text" class="form-control  mb-4" placeholder="Please enter your first name" required>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <label for="student_last_name">Last Name<span class="required-form">*</span></label>
                 <input name="student_last_name" type="text" class="form-control  mb-4" placeholder="Please enter your last name" required>
               </div>
+              <div class="col-md-4">
+                <select name="student_class" class="browser-default custom-select" required>
+                  <option selected >Enter Class:</option>
+                  {% for class in info.classes%}
+                    <option value="{{class.0}}">{{class.1}}</option>
+                  {%endfor%}
+                </select>
+              </div>
+
               <div class="col-md-6">
                 <label for="student_email">Email ID<span class="required-form">*</span></label>
                 <input name="student_email" type="email" class="form-control  mb-4" placeholder="Please enter your email-id" required>

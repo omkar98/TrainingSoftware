@@ -58,6 +58,7 @@
           <a href="{% url 'user-register'%}" class="btn btn-default default-color btn-sm" >
             Register</a>
         {%else%}
+          <a href="{% url 'user-dashboard' %}" class="btn btn-default default-color btn-sm">Dashboard</a>
           <a href="{% url 'user-logout'%}" class="btn btn-default default-color btn-sm" >
           Logout</a>
         {% endif %}
