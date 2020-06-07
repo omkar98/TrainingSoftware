@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h3 style="text-align: center; background: #EDEDED; color: #15AABF; padding:10px">ReactJS 15 Days Training Course</h3>
+    <h5 style="text-align: center;">Mahatma Gandhi Mission's College of Engineering, Nanded</h5>
+    <p> Please find here with the details of updates submitted by students in the past {{info.days}} day(s).</p>
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">#</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">Student</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">Date</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">Class</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">Title</th>
+          <th style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="col">Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%for userDetail in info.userDetails%}
+        <tr>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;" scope="row">{{forloop.counter}}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{userDetail.0.student.first_name}} {{userDetail.0.student.last_name}}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{userDetail.0.date_posted}}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{userDetail.1.1}}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{userDetail.0.title}}</td>
+          <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{userDetail.0.content|safe}}</td>
+        </tr>
+      {%endfor%}
+      </tbody>
+    </table>
+    <p>This is an auto-generated email. Please do-not reply.</p>
+    <p style="background: #ffc66c; text-align:center">
+    <small>This email is a part of ReactJS training course organized by MGM-Nanded. <a href="https://training-software.herokuapp.com/">Click here</a> to know more.
+    <br>Designed and Developed by Omkar Deshpande</small></p>
+  </body>
+</html>

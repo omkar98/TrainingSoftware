@@ -6,8 +6,51 @@ from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
+from django.core.mail import send_mail
+from django.contrib.auth.decorators import user_passes_test
+from django.conf import settings
+from datetime import datetime, timedelta
+from django.utils import timezone
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
 
-@login_required
+
+superusers = ['shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
+# superusers=['edu.omkar@gmail.com']
+
+def viewemailtemplate(request):
+    return render(request, 'users/mail_template.html')
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/admin')
+def updates_email(request):
+    all_user_details = []
+    info={
+        'title':'Email',
+        'userDetails': all_user_details
+    }
+    if request.method == 'POST':
+        form = request.POST.dict()
+        how_many_days =  int(form['days'])
+        updates = Update.objects.filter(date_posted__gte=datetime.now()-timedelta(days=how_many_days)).order_by('-date_posted')
+        for update in updates:
+            userDetails = UserDetail.objects.get(student=update.student)
+            all_user_details.append([update, userDetails.student_class_cat[userDetails.student_class]])
+        info={
+            'title':'Email',
+            'userDetails': all_user_details,
+            'days':int(form['days'])
+        }
+        subject = '[Student-Updates] ReactJS Training Course'
+        html_message = render_to_string('users/mail_template.html', {'info': info})
+        plain_message =strip_tags(html_message)
+        from_email = settings.EMAIL_HOST_USER
+        to = superusers
+        send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+        messages.add_message(request, messages.SUCCESS,"message sent successfully.")
+        print(info)
+    return render(request, 'users/update_emails.html',{'info':info})
+
+@login_required(login_url='/login')
 def user_dashboard(request):
     posts = Update.objects.filter(student=request.user)
     info={
