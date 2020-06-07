@@ -8,7 +8,7 @@
     <div class="col-md-12 text-center">
       <div class="pt-5 pb-4">
         <div class="p-2">
-          <h2>List of active participants</h2><hr>
+          <h2>List of active participants <small>({{info.userDetails|length}})</small></h2><hr>
           {% if info.userDetails|length%}
           <table class="table table-striped">
             <thead>

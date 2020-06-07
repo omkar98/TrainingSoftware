@@ -8,7 +8,7 @@ def home(request):
     return render(request, 'main_portal/home.html', {'info':info})
 
 def participants(request):
-    userDetails = UserDetail.objects.all().order_by('student_id')
+    userDetails = UserDetail.objects.filter(status=1).order_by('student_id')
     info={
         'title':'Participants',
         'userDetails': userDetails,
