@@ -13,13 +13,43 @@ from datetime import datetime, timedelta
 from django.utils import timezone
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
+from django.db.models import Q
 
 
 # superusers = ['bisen_rg@mgmcen.ac.in','shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
 superusers=['edu.omkar@gmail.com']
 
 def viewemailtemplate(request):
-    return render(request, 'users/mail_template.html')
+    return render(request, 'users/student_update_email.html')
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/admin')
+def no_updates_email(request):
+    student_updates = Update.objects.filter(date_posted__gte=datetime.now()-timedelta(days=1))
+    list_of_students = []
+    print(student_updates)
+    if not student_updates:
+        users = User.objects.all()
+        for user in users:
+            list_of_students.append(user.email)
+    else:
+        for stud in student_updates:
+            not_updated_student=User.objects.filter(~Q(email=stud.student.email))
+        for stud in not_updated_student:
+            list_of_students.append(stud.email)
+    info={
+        'users' : list_of_students,
+        'title' : 'Not Updated Users'
+    }
+    print(list_of_students)
+    subject = '[Update-Required] ReactJS 15-Days Training Course'
+    html_message = render_to_string('users/student_update_email.html', {'info': info})
+    plain_message =strip_tags(html_message)
+    from_email = settings.EMAIL_HOST_USER
+    to = list_of_students
+    send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+    # messages.add_message(request, messages.SUCCESS,"message sent successfully.")
+    print(info)
+    return render(request, 'users/student_update_email.html',{'info':info})
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin')
 def updates_email(request):

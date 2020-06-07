@@ -12,5 +12,5 @@ urlpatterns = [
     path('addUpdate/', user_views.add_update, name='add-update'),
     path('updateEmails/', user_views.updates_email, name='update-emails'),
     path('viewEmail/', user_views.viewemailtemplate, name='view-emails'),
-
+    path('noUpdatedStudents/', user_views.no_updates_email, name='not-updated'),
 ]
