@@ -21,13 +21,11 @@
             </thead>
             <tbody>
               {%for userDetail in info.userDetails%}
-
               <tr>
                 <th scope="row">{{forloop.counter}}</th>
                 <td>{{userDetail.student.first_name}} {{userDetail.student.last_name}}</td>
                 <td>{{userDetail.stud_class}}</td>
                 <td>{{userDetail.student.email}}</td>
-                <td>{{userDetail.0.title}}</td>
               </tr>
             {%endfor%}
             </tbody>
