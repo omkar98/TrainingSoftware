@@ -16,8 +16,8 @@ from django.utils.html import strip_tags
 from django.db.models import Q
 
 
-# superusers = ['bisen_rg@mgmcen.ac.in','shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
-superusers=['edu.omkar@gmail.com']
+superusers = ['bisen_rg@mgmcen.ac.in','shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
+# superusers=['edu.omkar@gmail.com']
 
 def viewemailtemplate(request):
     return render(request, 'users/student_update_email.html')
@@ -46,7 +46,9 @@ def no_updates_email(request):
     plain_message =strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     to = list_of_students
+    plain_text_1=f"Students who didnot yet submit their tasks are {list_of_students}"
     send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+    send_mail(subject, f"List of students who didnot yet submit their updates : {list_of_students}", from_email, superusers, fail_silently=False)
     # messages.add_message(request, messages.SUCCESS,"message sent successfully.")
     print(info)
     return render(request, 'users/student_update_email.html',{'info':info})
