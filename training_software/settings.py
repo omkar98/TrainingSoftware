@@ -28,8 +28,8 @@ SECRET_KEY = 'dt00jcw^86gvm)vy@y4h@ijw)c7y6qs&86+wg4jw7090eze*^&'
 # Set the above on while production or pushing the code. This is newly generated
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-# DEBUG = True
+# DEBUG = False
+DEBUG = True
 # DEBUG = os.environ.get('DEBUG_VALUE')
 # DEBUG = "True"
 
