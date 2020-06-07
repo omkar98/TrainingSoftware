@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Update
+from .models import Update, UserDetail
 from django.contrib import messages
 def home(request):
     info = {
@@ -8,10 +8,12 @@ def home(request):
     return render(request, 'main_portal/home.html', {'info':info})
 
 def participants(request):
-    info = {
-        'title': 'Participants',
+    userDetails = UserDetail.objects.all().order_by('student_id')
+    info={
+        'title':'Participants',
+        'userDetails': userDetails,
     }
-    return render(request, 'main_portal/construction.html', {'info':info})
+    return render(request, 'main_portal/participants.html', {'info':info})
 
 def announcements(request):
     info = {

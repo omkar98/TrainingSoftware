@@ -8,6 +8,9 @@ class UserDetail(models.Model):
     student_class = models.IntegerField(choices=student_class_cat, default=0)
     status_type = [(1, 'APPROVE'), (2, 'NOT APPROVED')]
     status = models.IntegerField(choices=status_type, default=2)
+    def getClass(self):
+        return self.student_class_cat[self.student_class][1]
+    stud_class = property(getClass)
     def __str__(self):
         return f"{self.student}  | {self.student_class_cat[self.student_class-1][1]} | {self.status_type[self.status-1][1]}"
 

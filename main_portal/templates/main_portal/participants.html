@@ -1,0 +1,41 @@
+{% extends "main_portal/base_layout.html" %}
+{% block title %}
+ {{info.title}}
+{% endblock title%}
+{% block content %}
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <div class="pt-5 pb-4">
+        <div class="p-2">
+          <h2>List of active participants</h2><hr>
+          {% if info.userDetails|length%}
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Student</th>
+                <th scope="col">Class</th>
+                <th scope="col">Email</th>
+              </tr>
+            </thead>
+            <tbody>
+              {%for userDetail in info.userDetails%}
+
+              <tr>
+                <th scope="row">{{forloop.counter}}</th>
+                <td>{{userDetail.student.first_name}} {{userDetail.student.last_name}}</td>
+                <td>{{userDetail.stud_class}}</td>
+                <td>{{userDetail.student.email}}</td>
+                <td>{{userDetail.0.title}}</td>
+              </tr>
+            {%endfor%}
+            </tbody>
+          </table>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock content %}

@@ -28,8 +28,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # Set the above on while production or pushing the code. This is newly generated
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-# DEBUG = os.environ.get('DEBUG_VALUE')
+# DEBUG = True
+DEBUG = os.environ.get('DEBUG_VALUE')
 # DEBUG = "True"
 
 ALLOWED_HOSTS = ['training-software.herokuapp.com', 'localhost']

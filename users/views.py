@@ -15,8 +15,8 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-superusers = ['shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
-# superusers=['edu.omkar@gmail.com']
+# superusers = ['bisen_rg@mgmcen.ac.in','shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
+superusers=['edu.omkar@gmail.com']
 
 def viewemailtemplate(request):
     return render(request, 'users/mail_template.html')
