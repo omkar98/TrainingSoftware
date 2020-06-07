@@ -26,7 +26,6 @@ def viewemailtemplate(request):
 def no_updates_email(request):
     student_updates = Update.objects.filter(date_posted__gte=datetime.now()-timedelta(days=1))
     list_of_students = []
-    print(student_updates)
     if not student_updates:
         users = User.objects.all()
         for user in users:
@@ -37,18 +36,18 @@ def no_updates_email(request):
         for stud in not_updated_student:
             list_of_students.append(stud.email)
     info={
+        'submitted':student_updates,
         'users' : list_of_students,
         'title' : 'Not Updated Users'
     }
-    print(list_of_students)
     subject = '[Update-Required] ReactJS 15-Days Training Course'
     html_message = render_to_string('users/student_update_email.html', {'info': info})
     plain_message =strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     to = list_of_students
     plain_text_1=f"Students who didnot yet submit their tasks are {list_of_students}"
-    send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
-    send_mail(subject, f"List of students who didnot yet submit their updates : {list_of_students}", from_email, superusers, fail_silently=False)
+    # send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+    # send_mail(subject, f"List of students who didnot yet submit their updates : {list_of_students}", from_email, superusers, fail_silently=False)
     # messages.add_message(request, messages.SUCCESS,"message sent successfully.")
     print(info)
     return render(request, 'users/student_update_email.html',{'info':info})
