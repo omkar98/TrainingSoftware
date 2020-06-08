@@ -24,19 +24,11 @@ def viewemailtemplate(request):
 
 @user_passes_test(lambda u: u.is_superuser, login_url='/admin')
 def no_updates_email(request):
-    student_updates = Update.objects.filter(date_posted__gte=datetime.now()-timedelta(days=1))
     list_of_students = []
-    if not student_updates:
-        users = User.objects.all()
-        for user in users:
-            list_of_students.append(user.email)
-    else:
-        for stud in student_updates:
-            not_updated_student=User.objects.filter(~Q(email=stud.student.email))
-        for stud in not_updated_student:
-            list_of_students.append(stud.email)
+    users = User.objects.all()
+    for user in users:
+        list_of_students.append(user.email)
     info={
-        'submitted':student_updates,
         'users' : list_of_students,
         'title' : 'Not Updated Users'
     }
@@ -45,10 +37,9 @@ def no_updates_email(request):
     plain_message =strip_tags(html_message)
     from_email = settings.EMAIL_HOST_USER
     to = list_of_students
-    plain_text_1=f"Students who didnot yet submit their tasks are {list_of_students}"
-    # send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
-    # send_mail(subject, f"List of students who didnot yet submit their updates : {list_of_students}", from_email, superusers, fail_silently=False)
-    # messages.add_message(request, messages.SUCCESS,"message sent successfully.")
+    # to=superusers
+    send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+    messages.add_message(request, messages.SUCCESS,"message sent successfully.")
     print(info)
     return render(request, 'users/student_update_email.html',{'info':info})
 
@@ -61,15 +52,20 @@ def updates_email(request):
     }
     if request.method == 'POST':
         form = request.POST.dict()
+        how_many_days = int(form['days'])-1
+        updates_from_date = datetime(int(datetime.now().strftime('%Y')),int(datetime.now().strftime('%m')), int(datetime.now().strftime('%d'))-how_many_days)
+        updates_from = datetime.now() - datetime(int(datetime.now().strftime('%Y')),int(datetime.now().strftime('%m')), int(datetime.now().strftime('%d'))-how_many_days, 00,00,00)
         how_many_days =  int(form['days'])
-        updates = Update.objects.filter(date_posted__gte=datetime.now()-timedelta(days=how_many_days)).order_by('-date_posted')
+        updates = Update.objects.filter(date_posted__gte=datetime.now()-updates_from).order_by('-date_posted')
         for update in updates:
             userDetails = UserDetail.objects.get(student=update.student)
             all_user_details.append([update, userDetails.student_class_cat[userDetails.student_class]])
         info={
             'title':'Email',
             'userDetails': all_user_details,
-            'days':int(form['days'])
+            'days':int(form['days']),
+            'updates_from':updates_from_date,
+            'updates_till':datetime.now()
         }
         subject = '[Student-Updates] ReactJS Training Course'
         html_message = render_to_string('users/mail_template.html', {'info': info})
@@ -78,7 +74,6 @@ def updates_email(request):
         to = superusers
         send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
         messages.add_message(request, messages.SUCCESS,"message sent successfully.")
-        print(info)
     return render(request, 'users/update_emails.html',{'info':info})
 
 @login_required(login_url='/login')
