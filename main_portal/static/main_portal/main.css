@@ -14,6 +14,11 @@ body {
 .default-color {
   background: #15AABF !important;
 }
+.update-description{
+  border-top: 1px dashed #15AABF;
+  padding:2px;
+  text-align: justify !important;
+}
 .header-color{
   background: #20232A !important;
 }
