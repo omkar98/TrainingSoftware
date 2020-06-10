@@ -11,6 +11,9 @@ body {
   background: #EDEDED;
   color: black;
 }
+.issues-description{
+  border-left: 2px solid green;
+}
 .default-color {
   background: #15AABF !important;
 }

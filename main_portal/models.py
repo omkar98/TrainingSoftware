@@ -23,3 +23,25 @@ class Update(models.Model):
 
     def __str__(self):
         return f"{self.date_posted.date()} | {self.student.first_name} | {self.title} "
+
+class Issue(models.Model):
+    title = models.CharField(max_length=100)
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    student = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def getSolutions(self):
+        solutions = Solution.objects.filter(issue=self.issue).order_by('date_posted')
+        return solutions
+
+    def __str__(self):
+        return f"{self.date_posted.date()} | {self.student.first_name} | {self.title} "
+
+class Solution(models.Model):
+    content = models.TextField()
+    date_posted = models.DateTimeField(default=timezone.now)
+    mentor = models.ForeignKey(User, on_delete=models.CASCADE)
+    issue = models.ForeignKey(Issue, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"{self.date_posted.date()} | {self.mentor.first_name} | {self.title} "

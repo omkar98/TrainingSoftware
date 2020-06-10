@@ -1,0 +1,42 @@
+{% extends "main_portal/base_layout.html" %}
+{% block title %}
+ {{info.title}}
+{% endblock title%}
+
+{% block content %}
+<main role="main" class="container-fluid">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="container my-5 py-5 z-depth-1">
+        <!--Section: Content-->
+        <section class="px-md-5 mx-md-5 dark-grey-text">
+          <a href="{% url 'user-dashboard' %}"><h5 class="text-right"><i class="fas fa-chart-line"></i> View Dashboard</h5></a>
+          <h3 class="font-weight-bold p-2"><i class="fas fa-question-circle"></i> Post your Query</h3>
+          <hr><form method="POST">
+           {% csrf_token %}
+           <div class="row">
+             <div class="col-md-12">
+               <label for="issue_title">Title<span class="required-form">*</span> </label>
+               <input name="issue_title" type="text" class="form-control  mb-4" placeholder="Ex: What's React.cloneElement?" required>
+             </div>
+           </div>
+           <div class="row">
+             <div class="col-md-12">
+               <label for="issue_content">Add Description<span class="required-form">*</span></label>
+               <br><p class="update-description z-depth-0"><small > <b>Please Note:</b> To further describe your issue, you can also share screenshots/code/files by storing them on your google drive(or github) and sharing the link in the description box below.</small></p>
+                <textarea name="issue_content" class="md-textarea form-control" rows="3" required></textarea>
+               <!-- <textarea name="update_content"></textarea><br> -->
+             </div>
+           </div>
+           <button class="btn btn-info btn-block my-2" type="submit">Submit</button>
+         </form>
+        </section>
+        <!--Section: Content-->
+</div>
+    </div>
+  </div>
+</main>
+<!-- Button trigger modal -->
+
+
+{% endblock content %}

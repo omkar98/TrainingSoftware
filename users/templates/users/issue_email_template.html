@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+  </head>
+  <body>
+    <h3 style="text-align: center; background: #EDEDED; color: #15AABF; padding:10px">ReactJS 15 Days Training Course</h3>
+    <h5 style="text-align: center;">Mahatma Gandhi Mission's College of Engineering, Nanded</h5>
+    <p>{{info.user.first_name}} has asked a query. Please find the details of the query below: </p>
+    <body>
+      <table style="width:100%; border-collapse: collapse;">
+         <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Student Name: </td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{info.user.first_name}} {{info.user.last_name}}</td>
+         </tr>
+         <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Query Title</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{info.issue.title}}</td>
+         </tr>
+         <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Content:</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{info.issue.content}}</td>
+         </tr>
+         <tr>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">Query Posted on :</td>
+            <td style="border: 1px solid #dddddd; text-align: left; padding: 8px;">{{info.issue.date_posted}}</td>
+         </tr>
+      </table>
+   </body>
+    <p style="font-weight: bold; color: #15AABF">You can reply the solution to the concerned student ({{info.user.first_name}}) at {{info.user.email}}.</p>
+
+    <small>Please Note: This is an auto-generated email. However, you may reply back on this email with your issues.</small>
+    <p style="background: #ffc66c; text-align:center">
+    <small>This email is a part of ReactJS training course organized by CSI Team of MGM-Nanded. <a href="https://training-software.herokuapp.com/">Click here</a> to know more.
+    <br>Designed and Developed by Omkar Deshpande</small></p>
+  </body>
+</html>

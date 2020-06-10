@@ -8,10 +8,12 @@
   <div class="row">
     <div class="col-md-12 text-center">
       <div class="container my-5 py-5 z-depth-1">
-
-        <a href="{% url 'add-update' %}"><h5 class="text-right"><i class="fas fa-pencil-alt"></i> Add Update</h5></a>
-        <!--Section: Content-->
-        <section class="text-center px-md-5 mx-md-5 dark-grey-text">
+        <p class="issues-description text-justify p-2"><small>Hi {{user.first_name}}! Happy to inform that you can now submit your queries to us! Feel free. Happy Learning!</small></p>
+          <p style="text-align: right"><a href="{% url 'add-update' %}"><i class="fas fa-pencil-alt"></i> Add Update</a>
+            &ensp;  <a href="{% url 'add-issue' %}"><i class="fas fa-question-circle"></i> Add Query</a>
+            <!-- &ensp;  <a href="{% url 'add-update' %}"><i class="fas fa-pencil-alt"></i> All Queries</a> -->
+          </p>
+        <hr><section class="text-center px-md-5 mx-md-5 dark-grey-text">
           <!-- <br><p class="update-description z-depth-0"><small > <b>Notification: </b>       </small></p> -->
           <h3 class="font-weight-bold">Your Updates</h3><hr>
           <table class="table table-striped">

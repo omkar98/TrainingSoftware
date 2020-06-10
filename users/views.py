@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from main_portal.models import Update, UserDetail
+from main_portal.models import Update, UserDetail, Issue, Solution
 from django.contrib.auth import authenticate, login
 from django.db import IntegrityError
 from django.contrib.auth import logout
@@ -82,6 +82,7 @@ def user_dashboard(request):
     info={
         'title': 'Dashboard',
         'posts': posts,
+        'user':request.user
     }
     return render(request, 'users/user-dashboard.html', {'info':info})
 
@@ -90,7 +91,6 @@ def add_update(request):
     info={
         'title': 'Add Update',
     }
-
     if request.method=='POST':
         form = request.POST.dict()
         update = Update(
@@ -98,12 +98,42 @@ def add_update(request):
             content=form['update_content'],
             student=request.user
         )
-        print(update)
-        messages.add_message(request, messages.SUCCESS,"Updated Successfully.")
+        messages.add_message(request, messages.SUCCESS,f"Congratulations {request.user.first_name}! Your update has been recorded successfully!.")
         update.save()
         return redirect('user-dashboard')
     else:
         return render(request, 'users/add-update.html', {'info':info})
+
+@login_required
+def add_issue(request):
+    info={
+        'title': 'Add Issue',
+    }
+
+    if request.method=='POST':
+        form = request.POST.dict()
+        issue = Issue(
+            title= form['issue_title'],
+            content=form['issue_content'],
+            student=request.user
+        )
+        issue.save()
+        info={
+            'title': 'Add Issue',
+            'user':request.user,
+            'issue':issue,
+        }
+        messages.add_message(request, messages.SUCCESS,"Great! We are super-excited to resolve your issues! The mentors will get back to you soon. Happy Learning!")
+        subject = f"[QUERY] {form['issue_title']}"
+        html_message = render_to_string('users/issue_email_template.html', {'info': info})
+        plain_message =strip_tags(html_message)
+        from_email = settings.EMAIL_HOST_USER
+        to = superusers
+        send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+        return redirect('user-dashboard')
+    else:
+        return render(request, 'users/add-issue.html', {'info':info})
+
 
 
 def logout_view(request):
