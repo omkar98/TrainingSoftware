@@ -8,6 +8,9 @@
   <div class="row">
     <div class="col-md-12 text-center">
       <div class="container my-5 py-5 z-depth-1">
+        {% if request.user.is_superuser %}
+            <h3 class="p-3" style="border: 1px dashed #15AABF">Dear Admin, Please <a href="{% url 'get-updates'%}">click here</a> to view all the Updates.</h3>
+        {% endif %}
         <p class="issues-description text-justify p-2"><small>Hi {{user.first_name}}! Happy to inform that you can now submit your queries to us! Feel free. Happy Learning!</small></p>
           <p style="text-align: right"><a href="{% url 'add-update' %}"><i class="fas fa-pencil-alt"></i> Add Update</a>
             &ensp;  <a href="{% url 'add-issue' %}"><i class="fas fa-question-circle"></i> Add Query</a>

@@ -4,48 +4,66 @@
 {% endblock title%}
 {% block content %}
 <main role="main" class="container-fluid">
-  <div class="row">
-    <div class="col-md-12 text-center">
-      <div class="pt-5 pb-4">
-        <div class="p-2">
-          <h2>All updates</h2><hr>
-          <form method="POST">
-            {% csrf_token %}
-            <div class="row p-1" style="display: flex; align-items: center; justify-content: center;">
-              <div class="col-md-6">
-                <label for="days">Get previous updates<span class="required-form">*</span></label>
-                <input name="days" type="integer" class="form-control  mb-4" required>
-              </div>
-            <button class="btn btn-info" type="submit">Get</button>
-          </form>
-          {% if info.userDetails|length%}
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Student</th>
-                <th scope="col">Date</th>
-                <th scope="col">Class</th>
-                <th scope="col">Title</th>
-                <th scope="col">Description</th>
-              </tr>
-            </thead>
-            <tbody>
-              {%for userDetail in info.userDetails%}
-              <tr>
-                <th scope="row">{{forloop.counter}}</th>
-                <td>{{userDetail.0.student.first_name}} {{userDetail.0.student.last_name}}</td>
-                <td>{{userDetail.0.date_posted}}</td>
-                <td>{{userDetail.1.1}}</td>
-                <td>{{userDetail.0.title}}</td>
-                <td>{{userDetail.0.content|safe}}</td>
-              </tr>
-            {%endfor%}
-            </tbody>
-          </table>
-          {%endif%}
+  <h2 class="pt-5 text-center">Get All Updates</h2><hr>
+  <div class="row p-4">
+    <form method="get">
+      <p class="p-2" style="border-left: 5px solid yellow"><small><b>NOTE: </b>Please enter the dates in the following format: YYYY-MM-DD (Example: 2020-06-23)</small></p><hr>
+      {{ info.myFilter.form }}
+      <button class="btn btn-sm btn-info" type="submit">Get</button>
+    </form>
+    <!-- <form method="POST">
+      {% csrf_token %}
+      <div class="row p-3">
+          <label>Select a Date Range for all the updates:</label>
+          <label for="from">  &nbsp;From</label>
+          <input type="integer" autocomplete="off" class="form-control" id="from" name="start_date" style="width:20% !important" required>
+          <label for="to"> &nbsp;&nbsp; To</label>
+          <input type="integer" autocomplete="off" class="form-control" id="to" name="end_date" style="width:20% !important" required>
+          <button class="btn btn-sm btn-info" type="submit">Get</button>
         </div>
-      </div>
+    </form> -->
+    <div class="col-md-12 text-center"><br><small>
+      <form method="post" class="p-3 text-justify" style="border: 1px dashed #15AABF; ">
+        <p>To send this data to you email address, please select your email-id: </p>
+        {% csrf_token %}
+        {% for user in info.superusers %}
+          <!-- Default unchecked -->
+          <div class="custom-control custom-checkbox" name="emails" style="text-align: justify !important;">
+                <input  name="{{user}}" type="checkbox" class="custom-control-input" id="{{user}}">
+                <label  class="custom-control-label" for="{{user}}">{{user}}</label>
+          </div>
+          {{superusers}}
+        {% endfor %}<br>
+        <button class="btn btn-sm btn-info" type="submit">Send Email</button>
+      </form>
+      {% if info.userDetails|length%}<hr>
+      <h3>Results Found: {{info.results_found}}</h3>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Student</th>
+            <th scope="col">Date</th>
+            <th scope="col">Class</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%for userDetail in info.userDetails%}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{userDetail.0.student.first_name}} {{userDetail.0.student.last_name}}</td>
+            <td>{{userDetail.0.date_posted}}</td>
+            <td>{{userDetail.1.1}}</td>
+            <td>{{userDetail.0.title}}</td>
+            <td>{{userDetail.0.content|safe}}</td>
+          </tr>
+        {%endfor%}
+        </tbody>
+      </table>
+      {%endif%}
+      </small>
     </div>
   </div>
 </main>

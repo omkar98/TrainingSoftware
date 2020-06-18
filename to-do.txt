@@ -8,3 +8,33 @@
 5) [STATIC PAGES]
   Create home, announcements, contacts, participants, leaderboard, schedule and gallery pages.
 6) Remaining tasks. (if any)
+
+
+
+important:
+if request.method == 'POST':
+      form = request.POST.dict()
+      print(request.GET)
+      # date_format = "%Y-%m-%d"
+      # a = datetime.strptime(str(form['start_date']), date_format)
+      # b = datetime.strptime(str(form['end_date']), date_format)+timedelta(days=1)
+      # updates = Update.objects.filter(date_posted__gte=a, date_posted__lt=b).order_by('-date_posted')
+      # print(updates)
+      # for update in updates:
+      #     userDetails = UserDetail.objects.get(student=update.student)
+      #     all_user_details.append([update, userDetails.student_class_cat[userDetails.student_class]])
+      # info={
+      #     'title':'Email',
+      #     'userDetails': all_user_details,
+      #     'myFilter': myFilter
+      #     # 'days':int(form['days']),
+      #     # 'updates_from':updates_from_date,
+      #     # 'updates_till':datetime.now()
+      # }
+      # subject = '[Student-Updates] ReactJS Training Course'
+      # html_message = render_to_string('users/mail_template.html', {'info': info})
+      # plain_message =strip_tags(html_message)
+      # from_email = settings.EMAIL_HOST_USER
+      # to = ['edu.omkar@gmail.com']
+      # send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+      messages.add_message(request, messages.SUCCESS,"message sent successfully.")

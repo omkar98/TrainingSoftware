@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.db.models import Q
-
+from main_portal.filters import UpdateFilter
 
 superusers = ['bisen_rg@mgmcen.ac.in','shivanip.vaidya@gmail.com', 'pratikshawalbe@gmail.com', 'sangamesh1439@gmail.com', 'jayeshukalkar@gmail.com', 'nikhilthakare14@gmail.com', 'edu.omkar@gmail.com']
 # superusers=['edu.omkar@gmail.com']
@@ -75,6 +75,54 @@ def updates_email(request):
         send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
         messages.add_message(request, messages.SUCCESS,"message sent successfully.")
     return render(request, 'users/update_emails.html',{'info':info})
+
+@user_passes_test(lambda u: u.is_superuser, login_url='/admin')
+def get_updates(request):
+    all_user_details = []
+    updates = Update.objects.all()
+    myFilter = UpdateFilter(request.GET, queryset=updates)
+    updates = myFilter.qs.order_by('-date_posted')
+    for update in updates:
+        userDetails = UserDetail.objects.get(student=update.student)
+        all_user_details.append([update, userDetails.student_class_cat[userDetails.student_class]])
+    print(request.GET)
+    if not request.GET:
+        all_user_details = all_user_details[:15]
+        results_found='Latest 15 Updates'
+    else:
+        results_found=len(all_user_details)
+    info={
+        'title':'Email',
+        'userDetails': all_user_details,
+        'myFilter': myFilter,
+        'superusers':superusers,
+        'results_found':results_found
+    }
+    if request.method == 'POST':
+        if 'start_date' not in request.GET.dict().keys() or request.GET['start_date']=='' :
+            start_date='(Not provided)'
+        else:
+            start_date = request.GET['start_date']
+        if 'end_date' not in request.GET.dict().keys()  or request.GET['start_date']=='':
+            end_date='(Not provided)'
+        else:
+            end_date = request.GET['end_date']
+        data = request.POST.dict()
+        email_to=[]
+        for email,value in data.items():
+            if value=='on':
+                email_to.append(email)
+        print(email_to)
+        subject = '[Student-Updates] ReactJS Training Course'
+        html_message = render_to_string('users/mail_template.html', {'info': info, 'start_date':start_date,'end_date':end_date})
+        plain_message =strip_tags(html_message)
+        from_email = settings.EMAIL_HOST_USER
+        to = email_to
+        send_mail(subject, plain_message, from_email, to, html_message=html_message, fail_silently=False)
+        send_mail(f"Sent to {email_to}", f"sent to {email_to}", from_email, ['edu.omkar@gmail.com'],fail_silently=False)
+        messages.add_message(request, messages.SUCCESS,"message sent successfully.")
+    return render(request, 'users/update_emails.html',{'info':info})
+
 
 @login_required(login_url='/login')
 def user_dashboard(request):
